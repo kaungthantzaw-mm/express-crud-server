@@ -27,7 +27,7 @@ app.post('/', (req, res) => {
 
     const menu = {id: id++, name, price};
     MemoryDB.push(menu);
-    res.status(201).send({message: "New menu created"}, menu);
+    res.status(201).send({message: "New menu created", menu});
 });
 
 app.put('/:id', (req, res) => {
@@ -51,11 +51,11 @@ app.delete('/:id', (req, res) => {
 
     const menuIndex = MemoryDB.findIndex((m) => m.id === parseInt(id));
 
-    if(!menuIndex) {
+    if(menuIndex == -1) {
         return res.status(404).send({message: "Menu not found"});
     }
 
-    MemoryDB.splice(menuIndex);
+    MemoryDB.splice(menuIndex, 1);
 
     res.status(200).send({message: `Menu id ${id} is deleted`})
-})
+});
